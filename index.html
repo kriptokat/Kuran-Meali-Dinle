@@ -334,6 +334,22 @@
     color: rgba(220, 255, 255, 0.8);
     border: 1px solid transparent;
     margin-bottom: 2px;
+    position: relative; /* Progress bar için relative konumlandırma */
+    overflow: hidden; /* Progress bar taşmasını engellemek için */
+  }
+
+  /* Yükleme progress barı - sadece aktif öğede gösterilecek */
+  .track-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #0ff, #a0f);
+    box-shadow: 0 0 10px #0ff;
+    transition: width 0.1s linear;
+    border-radius: 0 0 0 14px; /* Alt köşeleri yuvarla */
+    z-index: 1;
   }
 
   .track-item:hover {
@@ -357,6 +373,8 @@
     font-variant-numeric: tabular-nums;
     text-align: center;
     text-shadow: 0 0 5px #0ff;
+    z-index: 2; /* Progress bar'ın üstünde kalması için */
+    position: relative;
   }
 
   .track-item.active .track-num {
@@ -369,11 +387,23 @@
     font-size: 0.7rem;
     display: none;
     text-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+    z-index: 2; /* Progress bar'ın üstünde kalması için */
+    position: relative;
   }
 
   .track-item.active .track-icon {
     display: block;
     animation: iconPulse 1s infinite alternate;
+  }
+
+  /* Yükleme sırasında ikon dönsün */
+  .track-icon.loading {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   @keyframes iconPulse {
@@ -389,6 +419,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.9rem;
+    z-index: 2; /* Progress bar'ın üstünde kalması için */
+    position: relative;
   }
 
   .track-item.active .track-name {
@@ -625,6 +657,8 @@
   let currentIdx = -1;
   let isPlaying = false;
   let trackInterval = null;
+  let isLoading = false; // Yükleme durumu için değişken
+  let loadingInterval = null; // Yükleme progress bar'ı için interval
 
   const SESSION_KEY = 'sureler_session_v12_neon';
 
@@ -660,6 +694,89 @@
     return m + ':' + String(sec).padStart(2,'0');
   }
 
+  // Yükleme progress bar'ını güncelleme fonksiyonu
+  function updateLoadingProgress(percent) {
+    const activeItem = document.querySelector('.track-item.active');
+    if (!activeItem) return;
+    
+    let progressBar = activeItem.querySelector('.track-progress-bar');
+    if (!progressBar) {
+      progressBar = document.createElement('div');
+      progressBar.className = 'track-progress-bar';
+      activeItem.appendChild(progressBar);
+    }
+    progressBar.style.width = percent + '%';
+    
+    // İkonu loading yap
+    const icon = activeItem.querySelector('.track-icon');
+    if (icon) {
+      icon.classList.add('loading');
+      icon.textContent = '⟳'; // Dönen ok
+    }
+  }
+
+  // Yükleme simülasyonu (gerçek yükleme olmadığı için)
+  function simulateTrackLoading() {
+    if (loadingInterval) clearInterval(loadingInterval);
+    
+    isLoading = true;
+    let progress = 0;
+    
+    // Progress bar'ı sıfırla
+    updateLoadingProgress(0);
+    
+    loadingInterval = setInterval(() => {
+      if (!isLoading) {
+        clearInterval(loadingInterval);
+        loadingInterval = null;
+        return;
+      }
+      
+      progress += 2; // Her 50ms'de %2 artış (toplam ~2.5 saniye)
+      if (progress >= 100) {
+        progress = 100;
+        updateLoadingProgress(100);
+        clearInterval(loadingInterval);
+        loadingInterval = null;
+        isLoading = false;
+        
+        // Yükleme tamamlandı, ikonu normale döndür
+        const activeItem = document.querySelector('.track-item.active');
+        if (activeItem) {
+          const icon = activeItem.querySelector('.track-icon');
+          if (icon) {
+            icon.classList.remove('loading');
+            icon.textContent = '▶';
+          }
+        }
+      } else {
+        updateLoadingProgress(progress);
+      }
+    }, 50); // 50ms'de bir güncelle
+  }
+
+  // Yüklemeyi iptal et
+  function cancelLoading() {
+    if (loadingInterval) {
+      clearInterval(loadingInterval);
+      loadingInterval = null;
+    }
+    isLoading = false;
+    
+    // Progress bar'ı kaldır ve ikonu düzelt
+    const activeItem = document.querySelector('.track-item.active');
+    if (activeItem) {
+      const progressBar = activeItem.querySelector('.track-progress-bar');
+      if (progressBar) progressBar.remove();
+      
+      const icon = activeItem.querySelector('.track-icon');
+      if (icon) {
+        icon.classList.remove('loading');
+        icon.textContent = '▶';
+      }
+    }
+  }
+
   // ===========================================
   // LİSTELEME VE OYNATMA
   // ===========================================
@@ -673,6 +790,8 @@
       item.className = 'track-item' + (i === currentIdx ? ' active' : '');
       item.id = 'track-' + i;
       item.onclick = () => { 
+        // Eğer zaten yükleme yapılıyorsa iptal et
+        cancelLoading();
         loadTrack(i); 
         playAudio(); 
       };
@@ -688,6 +807,10 @@
 
   function loadTrack(idx, startTime = 0) {
     stopTracking();
+    
+    // Eğer yükleme yapılıyorsa iptal et
+    cancelLoading();
+    
     currentIdx = idx;
     
     const t = tracks[idx];
@@ -700,6 +823,9 @@
     const el = document.getElementById('track-' + idx);
     if (el) el.scrollIntoView({block: 'nearest', behavior: 'smooth'});
     
+    // Yükleme simülasyonunu başlat
+    simulateTrackLoading();
+    
     saveSession();
   }
 
@@ -709,6 +835,10 @@
       document.getElementById('playBtn').innerHTML = '❚❚';
       document.getElementById('playingDot').classList.add('visible');
       startTracking();
+      
+      // Yükleme tamamlandı, ikon ve progress bar'ı düzelt
+      cancelLoading();
+      
       saveSession();
     }).catch((err) => {
       console.warn('Oynatılamıyor:', err);
@@ -723,6 +853,10 @@
     document.getElementById('playBtn').innerHTML = '▶';
     document.getElementById('playingDot').classList.remove('visible');
     stopTracking();
+    
+    // Yüklemeyi iptal et (eğer devam ediyorsa)
+    cancelLoading();
+    
     saveSession();
   }
 
@@ -733,6 +867,7 @@
 
   function prevTrack() {
     if (currentIdx > 0) { 
+      cancelLoading();
       loadTrack(currentIdx - 1); 
       playAudio(); 
     }
@@ -740,6 +875,7 @@
 
   function nextTrack() {
     if (currentIdx < tracks.length - 1) { 
+      cancelLoading();
       loadTrack(currentIdx + 1); 
       playAudio(); 
     }
@@ -788,12 +924,20 @@
     document.getElementById('playBtn').innerHTML = '▶';
     document.getElementById('playingDot').classList.remove('visible');
     
+    // Yüklemeyi iptal et
+    cancelLoading();
+    
     if (currentIdx < tracks.length - 1) {
       loadTrack(currentIdx + 1);
       playAudio();
     } else {
       saveSession();
     }
+  });
+
+  audio.addEventListener('canplay', () => {
+    // Ses yüklenmeye hazır olduğunda yükleme simülasyonunu bitir
+    cancelLoading();
   });
 
   window.addEventListener('beforeunload', () => {
