@@ -336,19 +336,16 @@
     max-height: 180px;
     overflow-y: auto;
     padding-right: 2px;
+    /* Scrollbar gizleme - tüm tarayıcılar için */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
   }
-
+  
+  /* Chrome, Safari ve Opera için scrollbar gizleme */
   .track-list::-webkit-scrollbar {
-    width: 3px;
-  }
-  .track-list::-webkit-scrollbar-track {
-    background: rgba(0, 255, 200, 0.1);
-    border-radius: 2px;
-  }
-  .track-list::-webkit-scrollbar-thumb {
-    background: linear-gradient(#0ff, #f0f);
-    border-radius: 2px;
-    box-shadow: 0 0 20px #0ff;
+    display: none;
+    width: 0;
+    background: transparent;
   }
 
   .track-item {
@@ -448,6 +445,7 @@
     z-index: 2;
     position: relative;
     letter-spacing: 0.02em;
+    transition: all 0.2s ease;
   }
 
   .track-item.active .track-name {
@@ -510,6 +508,25 @@
     0% { transform: translate(0, 0) rotate(0deg); }
     100% { transform: translate(20px, 20px) rotate(45deg); }
   }
+
+  /* Şimşek efekti animasyonu */
+  @keyframes lightningFlash {
+    0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #f0f, 0 0 40px #f0f; color: #fff; }
+    10% { text-shadow: 0 0 10px #fff, 0 0 20px #ff0, 0 0 30px #f0f, 0 0 40px #0ff, 0 0 50px #0ff; color: #fff; }
+    20% { text-shadow: 0 0 5px #fff, 0 0 15px #0ff, 0 0 25px #f0f, 0 0 35px #ff0, 0 0 45px #f0f; color: #fff; }
+    30% { text-shadow: 0 0 8px #fff, 0 0 18px #f0f, 0 0 28px #0ff, 0 0 38px #fff, 0 0 48px #0ff; color: #fff; }
+    40% { text-shadow: 0 0 12px #fff, 0 0 22px #ff0, 0 0 32px #f0f, 0 0 42px #0ff, 0 0 52px #f0f; color: #fff; }
+    50% { text-shadow: 0 0 6px #fff, 0 0 16px #0ff, 0 0 26px #f0f, 0 0 36px #ff0, 0 0 46px #0ff; color: #fff; }
+    60% { text-shadow: 0 0 10px #fff, 0 0 20px #f0f, 0 0 30px #0ff, 0 0 40px #fff, 0 0 50px #f0f; color: #fff; }
+    70% { text-shadow: 0 0 7px #fff, 0 0 17px #ff0, 0 0 27px #f0f, 0 0 37px #0ff, 0 0 47px #0ff; color: #fff; }
+    80% { text-shadow: 0 0 9px #fff, 0 0 19px #0ff, 0 0 29px #f0f, 0 0 39px #ff0, 0 0 49px #f0f; color: #fff; }
+    90% { text-shadow: 0 0 11px #fff, 0 0 21px #f0f, 0 0 31px #0ff, 0 0 41px #fff, 0 0 51px #0ff; color: #fff; }
+    100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #f0f, 0 0 40px #f0f; color: #fff; }
+  }
+
+  .lightning-effect {
+    animation: lightningFlash 0.5s ease-out forwards;
+  }
 </style>
 </head>
 <body>
@@ -571,120 +588,120 @@
 (function() {
   // ---------- sure listesi (sıkıştırıldı, tam liste) ----------
   const SURE_LISTESI = [
-    {no:"001",name:"Fatiha",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/001-Fatiha.mp3"},
-    {no:"002",name:"Bakara",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/002-Bakara.mp3"},
-    {no:"003",name:"Ali-İmran",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/003-Ali-imran.mp3"},
-    {no:"004",name:"Nisa",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/004-Nisa.mp3"},
-    {no:"005",name:"Maide",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/005-Maide.mp3"},
-    {no:"006",name:"Enam",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/006-En-am.mp3"},
-    {no:"007",name:"Araf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/007-Araf.mp3"},
-    {no:"008",name:"Enfal",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/008-Enfal.mp3"},
-    {no:"009",name:"Tevbe",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/009-Tevbe.mp3"},
-    {no:"010",name:"Yunus",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/010-Yunus.mp3"},
-    {no:"011",name:"Hud",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/011-Hud.mp3"},
-    {no:"012",name:"Yusuf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/012-Yusuf.mp3"},
-    {no:"013",name:"Rad",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/013-Rad.mp3"},
-    {no:"014",name:"İbrahim",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/014-ibrahim.mp3"},
-    {no:"015",name:"Hicr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/015-Hicr.mp3"},
-    {no:"016",name:"Nahl",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/016-Nahl.mp3"},
-    {no:"017",name:"İsra",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/017-isra.mp3"},
-    {no:"018",name:"Kehf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/018-Kehf.mp3"},
-    {no:"019",name:"Meryem",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/019-Meryem.mp3"},
-    {no:"020",name:"Taha",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/020-Taha.mp3"},
-    {no:"021",name:"Enbiya",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/021-Enbiya.mp3"},
-    {no:"022",name:"Hac",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/022-Hac.mp3"},
-    {no:"023",name:"Müminun",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/023-Muminun.mp3"},
-    {no:"024",name:"Nur",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/024-Nur.mp3"},
-    {no:"025",name:"Furkan",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/025-Furkan.mp3"},
-    {no:"026",name:"Şuara",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/026-Suara.mp3"},
-    {no:"027",name:"Neml",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/027-Neml.mp3"},
-    {no:"028",name:"Kasas",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/028-Kasas.mp3"},
-    {no:"029",name:"Ankebut",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/029-Ankebut.mp3"},
-    {no:"030",name:"Rum",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/030-Rum.mp3"},
-    {no:"031",name:"Lokman",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/031-Lokman.mp3"},
-    {no:"032",name:"Secde",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/032-Secde.mp3"},
-    {no:"033",name:"Ahzab",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/033-Ahzab.mp3"},
-    {no:"034",name:"Sebe",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/034-Sebe.mp3"},
-    {no:"035",name:"Fatır",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/035-Fatir.mp3"},
-    {no:"036",name:"Yasin",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/036-Yasin.mp3"},
-    {no:"037",name:"Saffat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/037-Saffat.mp3"},
-    {no:"038",name:"Sad",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/038-Sad.mp3"},
-    {no:"039",name:"Zümer",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/039-Zumer.mp3"},
-    {no:"040",name:"Mümin",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/040-Mumin.mp3"},
-    {no:"041",name:"Fussilet",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/041-Fussilet.mp3"},
-    {no:"042",name:"Şura",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/042-Sura.mp3"},
-    {no:"043",name:"Zuhruf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/043-Zuhruf.mp3"},
-    {no:"044",name:"Duhan",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/044-Duhan.mp3"},
-    {no:"045",name:"Casiye",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/045-Casiye.mp3"},
-    {no:"046",name:"Ahkaf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/046-Ahkaf.mp3"},
-    {no:"047",name:"Muhammed",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/047-Muhammed.mp3"},
-    {no:"048",name:"Fetih",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/048-Fetih.mp3"},
-    {no:"049",name:"Hucurat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/049-Hucurat.mp3"},
-    {no:"050",name:"Kaf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/050-Kaf.mp3"},
-    {no:"051",name:"Zariyat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/051-Zariyat.mp3"},
-    {no:"052",name:"Tur",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/052-Tur.mp3"},
-    {no:"053",name:"Necm",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/053-Necm.mp3"},
-    {no:"054",name:"Kamer",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/054-Kamer.mp3"},
-    {no:"055",name:"Rahman",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/055-Rahman.mp3"},
-    {no:"056",name:"Vakıa",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/056-Vakia.mp3"},
-    {no:"057",name:"Hadid",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/057-Hadid.mp3"},
-    {no:"058",name:"Mücadele",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/058-Mucadele.mp3"},
-    {no:"059",name:"Haşr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/059-Hasr.mp3"},
-    {no:"060",name:"Mümtehine",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/060-Mumtehine.mp3"},
-    {no:"061",name:"Saf",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/061-Saf.mp3"},
-    {no:"062",name:"Cuma",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/062-Cuma.mp3"},
-    {no:"063",name:"Münafikun",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/063-Munafikun.mp3"},
-    {no:"064",name:"Tegâbün",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/064-Tegabun.mp3"},
-    {no:"065",name:"Talak",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/065-Talak.mp3"},
-    {no:"066",name:"Tahrim",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/066-Tahrim.mp3"},
-    {no:"067",name:"Mülk",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/067-Mulk.mp3"},
-    {no:"068",name:"Kalem",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/068-Kalem.mp3"},
-    {no:"069",name:"Hakka",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/069-Hakka.mp3"},
-    {no:"070",name:"Mearic",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/070-Mearic.mp3"},
-    {no:"071",name:"Nuh",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/071-Nuh.mp3"},
-    {no:"072",name:"Cin",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/072-Cin.mp3"},
-    {no:"073",name:"Müzzemmil",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/073-Muzzemmil.mp3"},
-    {no:"074",name:"Müddessir",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/074-Muddessir.mp3"},
-    {no:"075",name:"Kıyamet",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/075-Kiyamet.mp3"},
-    {no:"076",name:"insan",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/076-insan.mp3"},
-    {no:"077",name:"Mürselat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/077-Murselat.mp3"},
-    {no:"078",name:"Nebe",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/078-Nebe.mp3"},
-    {no:"079",name:"Naziat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/079-Naziat.mp3"},
-    {no:"080",name:"Abese",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/080-Abese.mp3"},
-    {no:"081",name:"Tekvir",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/081-Tekvir.mp3"},
-    {no:"082",name:"İnfitar",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/082-infitar.mp3"},
-    {no:"083",name:"Mutaffifin",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/083-Mutaffifin.mp3"},
-    {no:"084",name:"İnşikak",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/084-insikak.mp3"},
-    {no:"085",name:"Buruc",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/085-Buruc.mp3"},
-    {no:"086",name:"Tarık",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/086-Tarik.mp3"},
-    {no:"087",name:"A'lâ",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/087-Ala.mp3"},
-    {no:"088",name:"Gasiye",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/088-Gasiye.mp3"},
-    {no:"089",name:"Fecr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/089-Fecr.mp3"},
-    {no:"090",name:"Beled",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/090-Beled.mp3"},
-    {no:"091",name:"Şems",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/091-Sems.mp3"},
-    {no:"092",name:"Leyl",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/092-Leyl.mp3"},
-    {no:"093",name:"Duha",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/093-Duha.mp3"},
-    {no:"094",name:"İnşirah",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/094-insirah.mp3"},
-    {no:"095",name:"Tin",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/095-Tin.mp3"},
-    {no:"096",name:"Alak",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/096-Alak.mp3"},
-    {no:"097",name:"Kadr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/097-Kadr.mp3"},
-    {no:"098",name:"Beyyine",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/098-Beyyine.mp3"},
-    {no:"099",name:"Zilzal",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/099-Zilzal.mp3"},
-    {no:"100",name:"Adiyat",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/100-Adiyat.mp3"},
-    {no:"101",name:"Karia",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/101-Karia.mp3"},
-    {no:"102",name:"Tekasür",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/102-Tekasur.mp3"},
-    {no:"103",name:"Asr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/103-Asr.mp3"},
-    {no:"104",name:"Hümeze",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/104-Humeze.mp3"},
-    {no:"105",name:"Fil",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/105-Fil.mp3"},
-    {no:"106",name:"Kureyş",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/106-Kureys.mp3"},
-    {no:"107",name:"Maun",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/107-Maun.mp3"},
-    {no:"108",name:"Kevser",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/108-Kevser.mp3"},
-    {no:"109",name:"Kafirun",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/109-Kafirun.mp3"},
-    {no:"110",name:"Nasr",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/110-Nasr.mp3"},
-    {no:"111",name:"Tebbet",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/111-Tebbet.mp3"},
-    {no:"112",name:"İhlas",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/112-ihlas.mp3"},
-    {no:"113",name:"Felak",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/113-Felak.mp3"},
-    {no:"114",name:"Nas",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/114-Nas.mp3"}
+    {no:"001",name:"Fatiha Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/001-Fatiha.mp3"},
+    {no:"002",name:"Bakara Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/002-Bakara.mp3"},
+    {no:"003",name:"Ali-İmran Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/003-Ali-imran.mp3"},
+    {no:"004",name:"Nisa Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/004-Nisa.mp3"},
+    {no:"005",name:"Maide Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/005-Maide.mp3"},
+    {no:"006",name:"Enam Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/006-En-am.mp3"},
+    {no:"007",name:"Araf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/007-Araf.mp3"},
+    {no:"008",name:"Enfal Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/008-Enfal.mp3"},
+    {no:"009",name:"Tevbe Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/009-Tevbe.mp3"},
+    {no:"010",name:"Yunus Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/010-Yunus.mp3"},
+    {no:"011",name:"Hud Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/011-Hud.mp3"},
+    {no:"012",name:"Yusuf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/012-Yusuf.mp3"},
+    {no:"013",name:"Rad Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/013-Rad.mp3"},
+    {no:"014",name:"İbrahim Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/014-ibrahim.mp3"},
+    {no:"015",name:"Hicr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/015-Hicr.mp3"},
+    {no:"016",name:"Nahl Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/016-Nahl.mp3"},
+    {no:"017",name:"İsra Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/017-isra.mp3"},
+    {no:"018",name:"Kehf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/018-Kehf.mp3"},
+    {no:"019",name:"Meryem Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/019-Meryem.mp3"},
+    {no:"020",name:"Taha Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/020-Taha.mp3"},
+    {no:"021",name:"Enbiya Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/021-Enbiya.mp3"},
+    {no:"022",name:"Hac Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/022-Hac.mp3"},
+    {no:"023",name:"Müminun Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/023-Muminun.mp3"},
+    {no:"024",name:"Nur Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/024-Nur.mp3"},
+    {no:"025",name:"Furkan Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/025-Furkan.mp3"},
+    {no:"026",name:"Şuara Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/026-Suara.mp3"},
+    {no:"027",name:"Neml Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/027-Neml.mp3"},
+    {no:"028",name:"Kasas Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/028-Kasas.mp3"},
+    {no:"029",name:"Ankebut Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/029-Ankebut.mp3"},
+    {no:"030",name:"Rum Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/030-Rum.mp3"},
+    {no:"031",name:"Lokman Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/031-Lokman.mp3"},
+    {no:"032",name:"Secde Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/032-Secde.mp3"},
+    {no:"033",name:"Ahzab Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/033-Ahzab.mp3"},
+    {no:"034",name:"Sebe Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/034-Sebe.mp3"},
+    {no:"035",name:"Fatır Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/035-Fatir.mp3"},
+    {no:"036",name:"Yasin Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/036-Yasin.mp3"},
+    {no:"037",name:"Saffat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/037-Saffat.mp3"},
+    {no:"038",name:"Sad Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/038-Sad.mp3"},
+    {no:"039",name:"Zümer Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/039-Zumer.mp3"},
+    {no:"040",name:"Mümin Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/040-Mumin.mp3"},
+    {no:"041",name:"Fussilet Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/041-Fussilet.mp3"},
+    {no:"042",name:"Şura Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/042-Sura.mp3"},
+    {no:"043",name:"Zuhruf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/043-Zuhruf.mp3"},
+    {no:"044",name:"Duhan Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/044-Duhan.mp3"},
+    {no:"045",name:"Casiye Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/045-Casiye.mp3"},
+    {no:"046",name:"Ahkaf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/046-Ahkaf.mp3"},
+    {no:"047",name:"Muhammed Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/047-Muhammed.mp3"},
+    {no:"048",name:"Fetih Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/048-Fetih.mp3"},
+    {no:"049",name:"Hucurat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/049-Hucurat.mp3"},
+    {no:"050",name:"Kaf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/050-Kaf.mp3"},
+    {no:"051",name:"Zariyat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/051-Zariyat.mp3"},
+    {no:"052",name:"Tur Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/052-Tur.mp3"},
+    {no:"053",name:"Necm Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/053-Necm.mp3"},
+    {no:"054",name:"Kamer Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/054-Kamer.mp3"},
+    {no:"055",name:"Rahman Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/055-Rahman.mp3"},
+    {no:"056",name:"Vakıa Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/056-Vakia.mp3"},
+    {no:"057",name:"Hadid Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/057-Hadid.mp3"},
+    {no:"058",name:"Mücadele Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/058-Mucadele.mp3"},
+    {no:"059",name:"Haşr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/059-Hasr.mp3"},
+    {no:"060",name:"Mümtehine Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/060-Mumtehine.mp3"},
+    {no:"061",name:"Saf Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/061-Saf.mp3"},
+    {no:"062",name:"Cuma Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/062-Cuma.mp3"},
+    {no:"063",name:"Münafikun Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/063-Munafikun.mp3"},
+    {no:"064",name:"Tegâbün Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/064-Tegabun.mp3"},
+    {no:"065",name:"Talak Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/065-Talak.mp3"},
+    {no:"066",name:"Tahrim Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/066-Tahrim.mp3"},
+    {no:"067",name:"Mülk Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/067-Mulk.mp3"},
+    {no:"068",name:"Kalem Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/068-Kalem.mp3"},
+    {no:"069",name:"Hakka Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/069-Hakka.mp3"},
+    {no:"070",name:"Mearic Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/070-Mearic.mp3"},
+    {no:"071",name:"Nuh Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/071-Nuh.mp3"},
+    {no:"072",name:"Cin Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/072-Cin.mp3"},
+    {no:"073",name:"Müzzemmil Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/073-Muzzemmil.mp3"},
+    {no:"074",name:"Müddessir Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/074-Muddessir.mp3"},
+    {no:"075",name:"Kıyamet Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/075-Kiyamet.mp3"},
+    {no:"076",name:"insan Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/076-insan.mp3"},
+    {no:"077",name:"Mürselat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/077-Murselat.mp3"},
+    {no:"078",name:"Nebe Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/078-Nebe.mp3"},
+    {no:"079",name:"Naziat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/079-Naziat.mp3"},
+    {no:"080",name:"Abese Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/080-Abese.mp3"},
+    {no:"081",name:"Tekvir Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/081-Tekvir.mp3"},
+    {no:"082",name:"İnfitar Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/082-infitar.mp3"},
+    {no:"083",name:"Mutaffifin Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/083-Mutaffifin.mp3"},
+    {no:"084",name:"İnşikak Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/084-insikak.mp3"},
+    {no:"085",name:"Buruc Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/085-Buruc.mp3"},
+    {no:"086",name:"Tarık Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/086-Tarik.mp3"},
+    {no:"087",name:"A'lâ Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/087-Ala.mp3"},
+    {no:"088",name:"Gasiye Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/088-Gasiye.mp3"},
+    {no:"089",name:"Fecr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/089-Fecr.mp3"},
+    {no:"090",name:"Beled Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/090-Beled.mp3"},
+    {no:"091",name:"Şems Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/091-Sems.mp3"},
+    {no:"092",name:"Leyl Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/092-Leyl.mp3"},
+    {no:"093",name:"Duha Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/093-Duha.mp3"},
+    {no:"094",name:"İnşirah Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/094-insirah.mp3"},
+    {no:"095",name:"Tin Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/095-Tin.mp3"},
+    {no:"096",name:"Alak Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/096-Alak.mp3"},
+    {no:"097",name:"Kadr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/097-Kadr.mp3"},
+    {no:"098",name:"Beyyine Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/098-Beyyine.mp3"},
+    {no:"099",name:"Zilzal Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/099-Zilzal.mp3"},
+    {no:"100",name:"Adiyat Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/100-Adiyat.mp3"},
+    {no:"101",name:"Karia Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/101-Karia.mp3"},
+    {no:"102",name:"Tekasür Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/102-Tekasur.mp3"},
+    {no:"103",name:"Asr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/103-Asr.mp3"},
+    {no:"104",name:"Hümeze Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/104-Humeze.mp3"},
+    {no:"105",name:"Fil Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/105-Fil.mp3"},
+    {no:"106",name:"Kureyş Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/106-Kureys.mp3"},
+    {no:"107",name:"Maun Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/107-Maun.mp3"},
+    {no:"108",name:"Kevser Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/108-Kevser.mp3"},
+    {no:"109",name:"Kafirun Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/109-Kafirun.mp3"},
+    {no:"110",name:"Nasr Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/110-Nasr.mp3"},
+    {no:"111",name:"Tebbet Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/111-Tebbet.mp3"},
+    {no:"112",name:"İhlas Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/112-ihlas.mp3"},
+    {no:"113",name:"Felak Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/113-Felak.mp3"},
+    {no:"114",name:"Nas Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/114-Nas.mp3"}
   ];
 
   const audio = document.getElementById('audio');
@@ -943,16 +960,30 @@
     glowNext();
   }
 
-  let besmeleInterval = setInterval(() => {
-    // Arapça: sağdan sola etkisi için reverseOrder = true
+  // ---------- ŞİMŞEK EFEKTİ (her 15 saniyede bir sure ismine) ----------
+  function applyLightningEffect() {
+    const nowPlayingTitle = document.getElementById('nowTitle');
+    if (nowPlayingTitle) {
+      nowPlayingTitle.classList.add('lightning-effect');
+      setTimeout(() => {
+        nowPlayingTitle.classList.remove('lightning-effect');
+      }, 500);
+    }
+  }
+
+  // 15 saniyelik interval (besmele efekti + şimşek efekti)
+  let combinedInterval = setInterval(() => {
+    // Besmele efekti
     applyLetterGlow(arabicEl, false);
-    // Latin: soldan sağa (normal) reverseOrder = false
     applyLetterGlow(latinEl, false);
+    
+    // Şimşek efekti
+    applyLightningEffect();
   }, 15000); // 15 saniye
 
-  // sayfa kapandığında interval temizliği (opsiyonel)
+  // sayfa kapandığında interval temizliği
   window.addEventListener('beforeunload', function() {
-    if (besmeleInterval) clearInterval(besmeleInterval);
+    if (combinedInterval) clearInterval(combinedInterval);
   });
 
 })();
