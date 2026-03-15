@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kuran-ı Kerim Türkçe Meali</title>
+<title>Kuran-ı Kerim Türkçe Meali · Nöro-cyber</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap');
 
@@ -13,8 +13,67 @@
     box-sizing: border-box;
   }
 
+  /* ----- DEĞİŞKENLER (koyu tema varsayılan) ----- */
   body {
-    background: #030014;
+    --bg1: #030014;
+    --bg2: #030014;
+    --container-bg: rgba(5, 2, 20, 0.6);
+    --container-border: rgba(0, 255, 200, 0.4);
+    --container-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 200, 0.2) inset, 0 0 60px rgba(0, 255, 200, 0.3), 0 0 100px rgba(150, 0, 255, 0.2);
+    --container-hover-border: rgba(0, 255, 200, 0.8);
+    --container-hover-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(0, 255, 200, 0.3) inset, 0 0 80px rgba(0, 255, 200, 0.5), 0 0 120px rgba(150, 0, 255, 0.4);
+    --player-bg: rgba(8, 4, 25, 0.7);
+    --player-border: rgba(0, 255, 200, 0.3);
+    --sureler-bg: rgba(5, 2, 18, 0.7);
+    --sureler-border: rgba(0, 255, 200, 0.25);
+    --text-primary: rgba(220, 240, 255, 0.9);
+    --text-secondary: #6cf;
+    --text-glow: #0ff;
+    --progress-bg: rgba(0, 20, 30, 0.6);
+    --track-item-hover: rgba(0, 255, 200, 0.05);
+    --ctrl-btn-color: #8cf;
+    --ctrl-btn-hover: #fff;
+    --bismillah-glow: 0 0 10px rgba(0, 255, 255, 0.3);
+    --footer-color: rgba(0, 255, 200, 0.6);
+    --lightning-effect: #fff;
+    --track-name-color: rgba(220, 240, 255, 0.9);
+    --track-num-color: #6cf;
+    --slider-bg: #222;
+    --slider-handle: #0ff;
+  }
+
+  /* ----- AÇIK TEMA (göz yormayan, pastel) ----- */
+  body.light-theme {
+    --bg1: #e0e9f5;
+    --bg2: #e0e9f5;
+    --container-bg: rgba(245, 240, 255, 0.7);
+    --container-border: rgba(70, 130, 200, 0.5);
+    --container-shadow: 0 20px 40px rgba(0, 20, 30, 0.2), 0 0 0 1px rgba(70, 130, 200, 0.3) inset, 0 0 40px rgba(100, 160, 255, 0.3);
+    --container-hover-border: rgba(70, 130, 255, 0.8);
+    --container-hover-shadow: 0 25px 50px rgba(0, 20, 40, 0.3), 0 0 0 2px rgba(70, 130, 255, 0.3) inset, 0 0 60px rgba(100, 160, 255, 0.4);
+    --player-bg: rgba(230, 235, 250, 0.8);
+    --player-border: rgba(70, 130, 200, 0.4);
+    --sureler-bg: rgba(235, 240, 250, 0.8);
+    --sureler-border: rgba(70, 130, 200, 0.3);
+    --text-primary: #112233;
+    --text-secondary: #2a5f7a;
+    --text-glow: #3a7ca5;
+    --progress-bg: rgba(100, 140, 180, 0.2);
+    --track-item-hover: rgba(70, 130, 200, 0.1);
+    --ctrl-btn-color: #2a5f7a;
+    --ctrl-btn-hover: #000;
+    --bismillah-glow: 0 0 8px #5a9ec2;
+    --footer-color: #3a6d8c;
+    --lightning-effect: #222;
+    --track-name-color: #1e3b4f;
+    --track-num-color: #2a5f7a;
+    --slider-bg: #b0c4de;
+    --slider-handle: #2a5f7a;
+  }
+
+  /* body arkaplan ve geçiş */
+  body {
+    background: var(--bg1);
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     display: flex;
@@ -23,19 +82,25 @@
     padding: 12px;
     position: relative;
     overflow: hidden;
+    transition: background 0.4s ease, --bg1 0.4s, --bg2 0.4s;
   }
 
-  /* Nöro-cyber arkaplan */
+  /* nöro-cyber arkaplan aynen kalsın, renkleri temaya duyarlı yapalım */
   body::before {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(circle at 30% 40%, rgba(0, 255, 200, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 70% 60%, rgba(150, 0, 255, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 10% 80%, rgba(0, 200, 255, 0.1) 0%, transparent 45%),
-      repeating-linear-gradient(45deg, rgba(0, 255, 200, 0.03) 0px, rgba(0, 255, 200, 0.03) 1px, transparent 1px, transparent 20px);
+      radial-gradient(circle at 30% 40%, rgba(0, 200, 200, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(100, 0, 200, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 10% 80%, rgba(0, 160, 200, 0.1) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(0, 200, 180, 0.03) 0px, rgba(0, 200, 180, 0.03) 1px, transparent 1px, transparent 20px);
     z-index: 0;
+    transition: opacity 0.4s;
+  }
+
+  body.light-theme::before {
+    opacity: 0.6;  /* açık temada daha hafif */
   }
 
   body::after {
@@ -44,9 +109,9 @@
     width: 100%;
     height: 100%;
     background-image: 
-      radial-gradient(circle at 20px 20px, rgba(0, 255, 255, 0.2) 1px, transparent 1px),
-      radial-gradient(circle at 40px 60px, rgba(150, 0, 255, 0.2) 1px, transparent 1px),
-      radial-gradient(circle at 80px 120px, rgba(0, 200, 255, 0.2) 1px, transparent 1px);
+      radial-gradient(circle at 20px 20px, rgba(0, 200, 200, 0.2) 1px, transparent 1px),
+      radial-gradient(circle at 40px 60px, rgba(150, 0, 200, 0.2) 1px, transparent 1px),
+      radial-gradient(circle at 80px 120px, rgba(0, 180, 200, 0.2) 1px, transparent 1px);
     background-size: 100px 100px;
     opacity: 0.5;
     pointer-events: none;
@@ -59,35 +124,86 @@
     100% { background-position: 100px 100px; }
   }
 
+  .data-stream {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .data-stream::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 200, 180, 0.02) 10px, rgba(100, 0, 200, 0.02) 20px);
+    animation: dataFlow 20s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes dataFlow {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(20px, 20px) rotate(45deg); }
+  }
+
   .container {
     max-width: 380px;
     width: 100%;
-    background: rgba(5, 2, 20, 0.6);
+    background: var(--container-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 32px;
-    border: 1px solid rgba(0, 255, 200, 0.4);
-    box-shadow: 
-      0 30px 60px rgba(0, 0, 0, 0.8),
-      0 0 0 1px rgba(0, 255, 200, 0.2) inset,
-      0 0 60px rgba(0, 255, 200, 0.3),
-      0 0 100px rgba(150, 0, 255, 0.2);
+    border: 1px solid var(--container-border);
+    box-shadow: var(--container-shadow);
     padding: 10px;
     position: relative;
     z-index: 2;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, background 0.4s, border-color 0.4s, box-shadow 0.4s;
   }
 
   .container:hover {
-    border-color: rgba(0, 255, 200, 0.8);
-    box-shadow: 
-      0 30px 70px rgba(0, 0, 0, 0.9),
-      0 0 0 2px rgba(0, 255, 200, 0.3) inset,
-      0 0 80px rgba(0, 255, 200, 0.5),
-      0 0 120px rgba(150, 0, 255, 0.4);
+    border-color: var(--container-hover-border);
+    box-shadow: var(--container-hover-shadow);
     transform: scale(1.01);
   }
 
+  /* ---------- TEMA DEĞİŞTİRME ÇUBUĞU (minik, ortada) ---------- */
+  .theme-toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;  /* hafif boşluk */
+    width: 100%;
+  }
+
+  .theme-toggle-switch {
+    display: flex;
+    align-items: center;
+    background: var(--slider-bg);
+    width: 26px;          /* küçük boy */
+    height: 11px;
+    border-radius: 40px;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid var(--text-glow);
+    box-shadow: 0 0 8px var(--text-glow);
+    transition: background 0.3s, border-color 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .theme-toggle-slider {
+    width: 9px;
+    height: 9px;
+    background: var(--slider-handle);
+    border-radius: 50%;
+    transition: transform 0.3s ease, background 0.3s;
+    box-shadow: 0 0 12px var(--text-glow);
+  }
+
+  body.light-theme .theme-toggle-slider {
+    transform: translateX(15px); /* sağa kayar */
+  }
+
+  /* title-section aynı */
   .title-section {
     text-align: center;
     margin-bottom: 10px;
@@ -109,16 +225,16 @@
     font-size: 2rem;
     font-weight: 500;
     letter-spacing: 0.02em;
-    color: rgba(220, 240, 255, 0.9);
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    color: var(--text-primary);
+    text-shadow: var(--bismillah-glow);
     direction: rtl;
     unicode-bidi: bidi-override;
-    transition: all 0.1s;
+    transition: color 0.3s, text-shadow 0.3s;
   }
 
   .bismillah-latin {
     font-size: 1.1rem;
-    background: linear-gradient(135deg, #fff, #a0f, #0ff);
+    background: linear-gradient(135deg, var(--text-primary), #a0f, #0ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -129,22 +245,23 @@
 
   .neuro-signature {
     font-size: 0.55rem;
-    color: rgba(0, 255, 200, 0.6);
+    color: var(--footer-color);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     margin-top: 4px;
-    text-shadow: 0 0 10px #0ff;
+    text-shadow: 0 0 10px var(--text-glow);
   }
 
   .player-section {
-    background: rgba(8, 4, 25, 0.7);
+    background: var(--player-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 200, 0.3);
+    border: 1px solid var(--player-border);
     border-radius: 24px;
     padding: 14px;
     margin-bottom: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 200, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 30px var(--text-glow);
+    transition: background 0.4s, border 0.4s;
   }
 
   .now-playing-row {
@@ -164,10 +281,10 @@
   .playing-dot {
     width: 6px;
     height: 6px;
-    background: #0ff;
+    background: var(--text-glow);
     border-radius: 50%;
     display: none;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+    box-shadow: 0 0 20px var(--text-glow), 0 0 40px #f0f;
     flex-shrink: 0;
     animation: neuroPulse 1.5s ease-in-out infinite;
   }
@@ -177,14 +294,14 @@
   }
 
   @keyframes neuroPulse {
-    0% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px #0ff; }
+    0% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px var(--text-glow); }
     50% { opacity: 0.5; transform: scale(1.3); box-shadow: 0 0 40px #f0f; }
-    100% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px #0ff; }
+    100% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px var(--text-glow); }
   }
 
   .now-playing-title {
     font-size: 1rem;
-    background: linear-gradient(135deg, #fff, #a0f, #0ff);
+    background: linear-gradient(135deg, var(--text-primary), #a0f, #0ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -193,14 +310,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     letter-spacing: 0.02em;
+    transition: all 0.3s;
   }
 
   .now-playing-meta {
-    font-size: 0.65rem; /* hafif büyütüldü */
-    color: #6cf;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    text-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+    text-shadow: 0 0 10px var(--text-glow), 0 0 20px #f0f;
   }
 
   .player-controls-row {
@@ -209,19 +327,16 @@
     gap: 12px;
   }
 
-  .progress-area {
-    flex: 1;
-  }
-
+  .progress-area { flex: 1; }
   .progress-container {
     position: relative;
     height: 4px;
-    background: rgba(0, 20, 30, 0.6);
+    background: var(--progress-bg);
     border-radius: 2px;
     cursor: pointer;
     margin-bottom: 6px;
     overflow: hidden;
-    border: 1px solid rgba(0, 255, 200, 0.2);
+    border: 1px solid var(--player-border);
   }
 
   .progress-fill {
@@ -230,7 +345,6 @@
     width: 0%;
     transition: width 0.1s linear;
     box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
-    position: relative;
     background-size: 200% 100%;
     animation: neuroWave 2s linear infinite;
   }
@@ -239,8 +353,7 @@
     content: '';
     position: absolute;
     right: 0;
-    top: -2px;
-    bottom: -2px;
+    top: -2px; bottom: -2px;
     width: 3px;
     background: #fff;
     filter: blur(2px);
@@ -252,15 +365,14 @@
     100% { background-position: 200% 0%; }
   }
 
-  /* ✅ İSTEK 1: süre yazıları 2 punto büyütüldü (eskiden ~0.6rem şimdi 0.9rem) */
   .time-labels {
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;   /* 2 punto büyütme: 0.7rem → 0.9rem */
-    color: #8cf;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.05em;
-    text-shadow: 0 0 8px #0ff;
+    text-shadow: 0 0 8px var(--text-glow);
     font-weight: 500;
   }
 
@@ -272,50 +384,42 @@
 
   .ctrl-btn {
     background: transparent;
-    border: 1px solid rgba(0, 255, 200, 0.3);
-    color: #8cf;
-    width: 32px;
-    height: 32px;
+    border: 1px solid var(--player-border);
+    color: var(--ctrl-btn-color);
+    width: 32px; height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     transition: all 0.3s ease;
     font-size: 1rem;
     backdrop-filter: blur(5px);
-    text-shadow: 0 0 10px #0ff;
+    text-shadow: 0 0 10px var(--text-glow);
   }
 
   .ctrl-btn:hover {
-    color: #fff;
-    border-color: #0ff;
-    text-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+    color: var(--ctrl-btn-hover);
+    border-color: var(--text-glow);
+    text-shadow: 0 0 20px var(--text-glow), 0 0 40px #f0f;
     transform: scale(1.1) rotate(360deg);
     box-shadow: 0 0 30px rgba(0, 255, 200, 0.4);
   }
 
   .play-btn {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(150, 0, 255, 0.2));
-    border: 1px solid #0ff;
+    border: 1px solid var(--text-glow);
     font-size: 1.2rem;
   }
 
-  .play-btn:hover {
-    background: linear-gradient(135deg, rgba(0, 255, 200, 0.4), rgba(150, 0, 255, 0.4));
-    transform: scale(1.1) rotate(0deg);
-  }
-
   .sureler-section {
-    background: rgba(5, 2, 18, 0.7);
+    background: var(--sureler-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 200, 0.25);
+    border: 1px solid var(--sureler-border);
     border-radius: 24px;
     padding: 10px 8px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(150, 0, 255, 0.15);
+    transition: background 0.4s;
   }
 
   .sureler-header {
@@ -323,30 +427,23 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 6px 4px 6px;
-    color: #6cf;
+    color: var(--text-secondary);
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+    border-bottom: 1px solid var(--player-border);
     margin-bottom: 6px;
-    text-shadow: 0 0 10px #0ff;
+    text-shadow: 0 0 10px var(--text-glow);
   }
 
   .track-list {
     max-height: 180px;
     overflow-y: auto;
     padding-right: 2px;
-    /* Scrollbar gizleme - tüm tarayıcılar için */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  
-  /* Chrome, Safari ve Opera için scrollbar gizleme */
-  .track-list::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    background: transparent;
-  }
+  .track-list::-webkit-scrollbar { display: none; width: 0; background: transparent; }
 
   .track-item {
     display: flex;
@@ -357,7 +454,7 @@
     border-radius: 12px;
     transition: all 0.2s ease;
     font-size: 0.85rem;
-    color: rgba(200, 220, 255, 0.8);
+    color: var(--track-name-color);
     border: 1px solid transparent;
     margin-bottom: 2px;
     position: relative;
@@ -368,25 +465,16 @@
   .track-item::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.1), transparent);
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,200,0.1), transparent);
     transition: left 0.5s ease;
     pointer-events: none;
   }
-
-  .track-item:hover::before {
-    left: 100%;
-  }
+  .track-item:hover::before { left: 100%; }
 
   .track-progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 0%;
+    position: absolute; bottom: 0; left: 0; height: 2px; width: 0%;
     background: linear-gradient(90deg, #0ff, #f0f);
     box-shadow: 0 0 15px #0ff;
     transition: width 0.1s linear;
@@ -394,122 +482,54 @@
   }
 
   .track-item:hover {
-    border-color: rgba(0, 255, 200, 0.5);
+    border-color: var(--text-glow);
     transform: translateX(3px);
-    background: rgba(0, 255, 200, 0.05);
+    background: var(--track-item-hover);
   }
-
   .track-item.active {
-    border-color: #0ff;
-    background: rgba(0, 255, 200, 0.08);
+    border-color: var(--text-glow);
+    background: var(--track-item-hover);
   }
-
   .track-num {
     width: 26px;
-    color: #6cf;
+    color: var(--track-num-color);
     font-size: 0.7rem;
     font-variant-numeric: tabular-nums;
     text-align: center;
-    text-shadow: 0 0 8px #0ff;
-    z-index: 2;
-    position: relative;
-    font-weight: 600;
+    text-shadow: 0 0 8px var(--text-glow);
+    z-index: 2; position: relative; font-weight: 600;
   }
-
-  .track-item.active .track-num {
-    display: none;
-  }
-
+  .track-item.active .track-num { display: none; }
   .track-icon {
-    width: 26px;
-    color: #0ff;
-    font-size: 0.7rem;
-    display: none;
-    text-shadow: 0 0 15px #0ff, 0 0 30px #f0f;
-    z-index: 2;
-    position: relative;
+    width: 26px; color: var(--text-glow); font-size: 0.7rem;
+    display: none; text-shadow: 0 0 15px var(--text-glow), 0 0 30px #f0f;
+    z-index: 2; position: relative;
   }
-
-  .track-item.active .track-icon {
-    display: block;
-  }
-
+  .track-item.active .track-icon { display: block; }
   .track-name {
-    flex: 1;
-    color: rgba(220, 240, 255, 0.9);
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.85rem;
-    z-index: 2;
-    position: relative;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
+    flex: 1; color: var(--track-name-color); font-weight: 400;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 0.85rem; z-index: 2; position: relative; letter-spacing: 0.02em;
   }
-
   .track-item.active .track-name {
-    background: linear-gradient(135deg, #fff, #a0f, #0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, var(--text-primary), #a0f, #0ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .neuro-footer {
-    text-align: center;
-    margin-top: 8px;
-    font-size: 0.7rem;
-    color: rgba(0, 255, 200, 0.6);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-shadow: 0 0 15px #0ff;
-    position: relative;
+    text-align: center; margin-top: 8px; font-size: 0.7rem;
+    color: var(--footer-color); letter-spacing: 0.2em; text-transform: uppercase;
+    text-shadow: 0 0 15px var(--text-glow);
     padding: 2px 0;
   }
-
   .neuro-footer span {
     background: linear-gradient(135deg, #0ff, #f0f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; font-weight: 600;
   }
 
-  .data-stream {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-  }
-
-  .data-stream::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0, 255, 200, 0.02) 10px,
-      rgba(150, 0, 255, 0.02) 20px
-    );
-    animation: dataFlow 20s linear infinite;
-    opacity: 0.5;
-  }
-
-  @keyframes dataFlow {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(20px, 20px) rotate(45deg); }
-  }
-
-  /* Şimşek efekti animasyonu */
+  /* lightning effect aynen */
   @keyframes lightningFlash {
     0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #f0f, 0 0 40px #f0f; color: #fff; }
     10% { text-shadow: 0 0 10px #fff, 0 0 20px #ff0, 0 0 30px #f0f, 0 0 40px #0ff, 0 0 50px #0ff; color: #fff; }
@@ -523,16 +543,21 @@
     90% { text-shadow: 0 0 11px #fff, 0 0 21px #f0f, 0 0 31px #0ff, 0 0 41px #fff, 0 0 51px #0ff; color: #fff; }
     100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #f0f, 0 0 40px #f0f; color: #fff; }
   }
+  .lightning-effect { animation: lightningFlash 0.5s ease-out forwards; }
 
-  .lightning-effect {
-    animation: lightningFlash 0.5s ease-out forwards;
-  }
 </style>
 </head>
-<body>
+<body class="">
 <div class="data-stream"></div>
 
 <div class="container">
+  <!-- minik tema değiştirme çubuğu, tam ortada -->
+  <div class="theme-toggle-wrapper">
+    <div class="theme-toggle-switch" id="themeToggleSwitch">
+      <div class="theme-toggle-slider"></div>
+    </div>
+  </div>
+
   <div class="title-section">
     <div class="bismillah-container" id="bismillahContainer">
       <div class="bismillah-arabic" id="bismillahArabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
@@ -586,7 +611,7 @@
 
 <script>
 (function() {
-  // ---------- sure listesi (sıkıştırıldı, tam liste) ----------
+  // ---------- sure listesi aynı ----------
   const SURE_LISTESI = [
     {no:"001",name:"Fatiha Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/001-Fatiha.mp3"},
     {no:"002",name:"Bakara Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/002-Bakara.mp3"},
@@ -704,6 +729,7 @@
     {no:"114",name:"Nas Suresi",url:"https://archive.org/download/Ahmet_Deniz_Meal_Kuran/114-Nas.mp3"}
   ];
 
+  // ---------- aynı player kodları, sadece tema toggle ve space tuşu eklendi ----------
   const audio = document.getElementById('audio');
   let tracks = SURE_LISTESI;
   let currentIdx = -1;
@@ -714,154 +740,71 @@
 
   const SESSION_KEY = 'sureler_session_neuro_v2';
 
-  function saveSession() {
+  function saveSession() { /* aynı */ 
     if (!tracks.length || currentIdx < 0) return;
     const session = { currentIdx, currentTime: audio.currentTime, isPlaying };
     try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) {}
   }
-
-  function loadSession() {
-    try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; }
-  }
-
-  function formatSec(s) {
-    s = Math.floor(s);
-    const m = Math.floor(s / 60);
-    const sec = s % 60;
-    return m + ':' + String(sec).padStart(2,'0');
-  }
+  function loadSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; } }
+  function formatSec(s) { s = Math.floor(s); const m = Math.floor(s/60); const sec = s%60; return m + ':' + String(sec).padStart(2,'0'); }
 
   function updateLoadingProgress(percent) {
     const activeItem = document.querySelector('.track-item.active');
     if (!activeItem) return;
     let progressBar = activeItem.querySelector('.track-progress-bar');
-    if (!progressBar) {
-      progressBar = document.createElement('div');
-      progressBar.className = 'track-progress-bar';
-      activeItem.appendChild(progressBar);
-    }
+    if (!progressBar) { progressBar = document.createElement('div'); progressBar.className = 'track-progress-bar'; activeItem.appendChild(progressBar); }
     progressBar.style.width = percent + '%';
   }
-
   function simulateTrackLoading() {
     if (loadingInterval) clearInterval(loadingInterval);
-    isLoading = true;
-    let progress = 0;
-    updateLoadingProgress(0);
+    isLoading = true; let progress = 0; updateLoadingProgress(0);
     loadingInterval = setInterval(() => {
-      if (!isLoading) {
-        clearInterval(loadingInterval);
-        loadingInterval = null;
-        return;
-      }
-      progress += 2;
-      if (progress >= 100) {
-        progress = 100;
-        updateLoadingProgress(100);
-        clearInterval(loadingInterval);
-        loadingInterval = null;
-        isLoading = false;
-      } else {
-        updateLoadingProgress(progress);
-      }
+      if (!isLoading) { clearInterval(loadingInterval); loadingInterval = null; return; }
+      progress += 2; if (progress >= 100) { progress = 100; updateLoadingProgress(100); clearInterval(loadingInterval); loadingInterval = null; isLoading = false; } 
+      else updateLoadingProgress(progress);
     }, 50);
   }
-
   function cancelLoading() {
-    if (loadingInterval) {
-      clearInterval(loadingInterval);
-      loadingInterval = null;
-    }
-    isLoading = false;
-    const activeItem = document.querySelector('.track-item.active');
-    if (activeItem) {
-      const progressBar = activeItem.querySelector('.track-progress-bar');
-      if (progressBar) progressBar.remove();
-    }
+    if (loadingInterval) { clearInterval(loadingInterval); loadingInterval = null; }
+    isLoading = false; const activeItem = document.querySelector('.track-item.active');
+    if (activeItem) { const progressBar = activeItem.querySelector('.track-progress-bar'); if(progressBar) progressBar.remove(); }
   }
-
   function renderList() {
     const list = document.getElementById('trackList');
-    list.innerHTML = '';
-    document.getElementById('totalInfo').textContent = tracks.length;
+    list.innerHTML = ''; document.getElementById('totalInfo').textContent = tracks.length;
     tracks.forEach((t, i) => {
       const item = document.createElement('div');
       item.className = 'track-item' + (i === currentIdx ? ' active' : '');
       item.id = 'track-' + i;
       item.onclick = () => { cancelLoading(); loadTrack(i); playAudio(); };
-      item.innerHTML = `
-        <span class="track-num">${t.no}</span>
-        <span class="track-icon">▶</span>
-        <span class="track-name">${t.name}</span>
-      `;
+      item.innerHTML = `<span class="track-num">${t.no}</span><span class="track-icon">▶</span><span class="track-name">${t.name}</span>`;
       list.appendChild(item);
     });
   }
-
   function loadTrack(idx, startTime = 0) {
-    stopTracking();
-    cancelLoading();
-    currentIdx = idx;
-    const t = tracks[idx];
-    audio.src = t.url;
-    audio.currentTime = startTime;
+    stopTracking(); cancelLoading(); currentIdx = idx;
+    const t = tracks[idx]; audio.src = t.url; audio.currentTime = startTime;
     document.getElementById('nowTitle').textContent = t.name;
     document.getElementById('nowMeta').textContent = t.no + ' / ' + tracks.length;
-    renderList();
-    const el = document.getElementById('track-' + idx);
-    if (el) el.scrollIntoView({block: 'nearest', behavior: 'smooth'});
-    simulateTrackLoading();
-    saveSession();
+    renderList(); const el = document.getElementById('track-'+idx); if(el) el.scrollIntoView({block:'nearest',behavior:'smooth'});
+    simulateTrackLoading(); saveSession();
   }
-
   function playAudio() {
     audio.play().then(() => {
-      isPlaying = true;
-      document.getElementById('playBtn').innerHTML = '❚❚';
+      isPlaying = true; document.getElementById('playBtn').innerHTML = '❚❚';
       document.getElementById('playingDot').classList.add('visible');
-      startTracking();
-      cancelLoading();
-      saveSession();
-    }).catch((err) => {
-      console.warn('Oynatılamıyor:', err);
-      isPlaying = false;
-      document.getElementById('playBtn').innerHTML = '▶';
-    });
+      startTracking(); cancelLoading(); saveSession();
+    }).catch(() => { isPlaying = false; document.getElementById('playBtn').innerHTML = '▶'; });
   }
-
   function pauseAudio() {
-    audio.pause();
-    isPlaying = false;
-    document.getElementById('playBtn').innerHTML = '▶';
-    document.getElementById('playingDot').classList.remove('visible');
-    stopTracking();
-    cancelLoading();
-    saveSession();
+    audio.pause(); isPlaying = false; document.getElementById('playBtn').innerHTML = '▶';
+    document.getElementById('playingDot').classList.remove('visible'); stopTracking(); cancelLoading(); saveSession();
   }
-
-  function togglePlay() {
-    if (currentIdx < 0) return;
-    isPlaying ? pauseAudio() : playAudio();
-  }
-
-  function prevTrack() {
-    if (currentIdx > 0) { cancelLoading(); loadTrack(currentIdx - 1); playAudio(); }
-  }
-
-  function nextTrack() {
-    if (currentIdx < tracks.length - 1) { cancelLoading(); loadTrack(currentIdx + 1); playAudio(); }
-  }
-
-  function startTracking() {
-    stopTracking();
-    trackInterval = setInterval(() => {
-      if (!audio.paused && Math.floor(audio.currentTime) % 5 === 0) saveSession();
-    }, 1000);
-  }
-
-  function stopTracking() {
-    if (trackInterval) { clearInterval(trackInterval); trackInterval = null; }
-  }
+  function togglePlay() { if (currentIdx < 0) return; isPlaying ? pauseAudio() : playAudio(); }
+  function prevTrack() { if (currentIdx > 0) { cancelLoading(); loadTrack(currentIdx - 1); playAudio(); } }
+  function nextTrack() { if (currentIdx < tracks.length - 1) { cancelLoading(); loadTrack(currentIdx + 1); playAudio(); } }
+  function startTracking() { stopTracking(); trackInterval = setInterval(() => { if (!audio.paused && Math.floor(audio.currentTime) % 5 === 0) saveSession(); },1000); }
+  function stopTracking() { if(trackInterval) { clearInterval(trackInterval); trackInterval = null; } }
 
   audio.addEventListener('timeupdate', () => {
     if (!audio.duration) return;
@@ -870,121 +813,68 @@
     document.getElementById('timeCurrent').textContent = formatSec(Math.floor(audio.currentTime));
     document.getElementById('timeTotal').textContent = formatSec(Math.floor(audio.duration));
   });
-
   document.getElementById('progressContainer').addEventListener('click', function(e) {
-    const rect = this.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pct * audio.duration;
-    saveSession();
+    const rect = this.getBoundingClientRect(); const pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration; saveSession();
   });
-
   audio.addEventListener('ended', () => {
-    stopTracking();
-    isPlaying = false;
-    document.getElementById('playBtn').innerHTML = '▶';
-    document.getElementById('playingDot').classList.remove('visible');
-    cancelLoading();
-    if (currentIdx < tracks.length - 1) {
-      loadTrack(currentIdx + 1);
-      playAudio();
-    } else {
-      saveSession();
-    }
+    stopTracking(); isPlaying = false; document.getElementById('playBtn').innerHTML = '▶';
+    document.getElementById('playingDot').classList.remove('visible'); cancelLoading();
+    if (currentIdx < tracks.length - 1) { loadTrack(currentIdx + 1); playAudio(); } else saveSession();
   });
-
-  audio.addEventListener('canplay', () => {
-    cancelLoading();
-  });
-
+  audio.addEventListener('canplay', cancelLoading);
   window.addEventListener('beforeunload', saveSession);
 
+  // klavye: boşluk toggle, sağ/sol 5 saniye
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      if (audio.duration) audio.currentTime = Math.min(audio.currentTime + 5, audio.duration);
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      if (audio.duration) audio.currentTime = Math.max(audio.currentTime - 5, 0);
-    }
+    if (e.key === 'ArrowRight') { e.preventDefault(); if (audio.duration) audio.currentTime = Math.min(audio.currentTime + 5, audio.duration); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (audio.duration) audio.currentTime = Math.max(audio.currentTime - 5, 0); }
+    else if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
   });
 
   const session = loadSession();
   if (session && session.currentIdx !== undefined && session.currentIdx >= 0 && session.currentIdx < tracks.length) {
     loadTrack(session.currentIdx, session.currentTime || 0);
     if (session.isPlaying) setTimeout(() => playAudio(), 100);
-  } else {
-    loadTrack(0);
-  }
+  } else loadTrack(0);
 
-  window.prevTrack = prevTrack;
-  window.nextTrack = nextTrack;
-  window.togglePlay = togglePlay;
+  window.prevTrack = prevTrack; window.nextTrack = nextTrack; window.togglePlay = togglePlay;
 
-  // ---------- BESMELE HARF EFEKTİ (15sn periyod, RTL/LTR) ----------
+  // ---------- TEMA DEĞİŞTİRME ----------
+  const toggleSwitch = document.getElementById('themeToggleSwitch');
+  toggleSwitch.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+  });
+
+  // ---------- BESMELE HARF EFEKTİ + ŞİMŞEK ----------
   const arabicEl = document.getElementById('bismillahArabic');
   const latinEl = document.getElementById('bismillahLatin');
-
   function applyLetterGlow(element, reverseOrder = false) {
     if (!element) return;
-    const originalText = element.innerText;
-    const letters = originalText.split('');
-    element.innerHTML = ''; // temizle
-    letters.forEach((ch, idx) => {
-      const span = document.createElement('span');
-      span.textContent = ch;
-      span.style.transition = 'text-shadow 0.15s ease, color 0.15s';
-      span.style.color = 'inherit';
-      element.appendChild(span);
-    });
-
-    const spans = element.querySelectorAll('span');
-    let i = 0;
+    const originalText = element.innerText; const letters = originalText.split('');
+    element.innerHTML = '';
+    letters.forEach(ch => { const span = document.createElement('span'); span.textContent = ch; span.style.transition = 'text-shadow 0.15s ease, color 0.15s'; span.style.color = 'inherit'; element.appendChild(span); });
+    const spans = element.querySelectorAll('span'); let i = 0;
     function glowNext() {
-      // önceki tüm sil
-      spans.forEach(s => {
-        s.style.color = '';
-        s.style.textShadow = '';
-      });
-      if (i >= spans.length) {
-        // döngü bitti, periyodu temizle
-        return;
-      }
+      spans.forEach(s => { s.style.color = ''; s.style.textShadow = ''; });
+      if (i >= spans.length) return;
       const index = reverseOrder ? spans.length - 1 - i : i;
       spans[index].style.color = '#ffffff';
       spans[index].style.textShadow = '0 0 20px #fff, 0 0 35px #0ff, 0 0 60px #f0f, 0 0 80px #ff0';
-      i++;
-      if (i < spans.length) {
-        setTimeout(glowNext, 180); // harf geçiş hızı
-      }
+      i++; if (i < spans.length) setTimeout(glowNext, 180);
     }
     glowNext();
   }
-
-  // ---------- ŞİMŞEK EFEKTİ (her 15 saniyede bir sure ismine) ----------
   function applyLightningEffect() {
     const nowPlayingTitle = document.getElementById('nowTitle');
-    if (nowPlayingTitle) {
-      nowPlayingTitle.classList.add('lightning-effect');
-      setTimeout(() => {
-        nowPlayingTitle.classList.remove('lightning-effect');
-      }, 500);
-    }
+    if (nowPlayingTitle) { nowPlayingTitle.classList.add('lightning-effect'); setTimeout(() => nowPlayingTitle.classList.remove('lightning-effect'), 500); }
   }
-
-  // 15 saniyelik interval (besmele efekti + şimşek efekti)
   let combinedInterval = setInterval(() => {
-    // Besmele efekti
     applyLetterGlow(arabicEl, false);
     applyLetterGlow(latinEl, false);
-    
-    // Şimşek efekti
     applyLightningEffect();
-  }, 15000); // 15 saniye
-
-  // sayfa kapandığında interval temizliği
-  window.addEventListener('beforeunload', function() {
-    if (combinedInterval) clearInterval(combinedInterval);
-  });
+  }, 15000);
+  window.addEventListener('beforeunload', function() { if (combinedInterval) clearInterval(combinedInterval); });
 
 })();
 </script>
